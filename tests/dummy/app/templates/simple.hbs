@@ -1,0 +1,69 @@
+<h1>Simple List</h1>
+
+<p>
+A list is a collection of items, the default form a list is rendered as <i>&lt;ul&gt;</i> tag where each item is rendered as an <i>&lt;li&gt;</i> tag, simple isnt it? But lists are more sophisticated from the first glance, here are some of their features:
+</p>
+
+<p>
+    <ul>
+        <li>Items can be selected.</li>
+        <li>A selected item recieves a css class.</li>
+        <li>The controller can bind its own property as the selected item.</li>
+        <li>When an item is selected, all items get notified to react upon the selection.</li>
+        <li>It's possible to bind a model to the list, when model changes, all items recieves the change can react.</li>
+    </ul>
+</p>
+
+<h3>Demo</h3>
+
+{{#em-list}}
+    {{#em-list-item}}Hello{{/em-list-item}}
+    {{#em-list-item}}World{{/em-list-item}}
+{{/em-list}}
+
+<h3>Markup</h3>
+
+<div class="well line-example">
+    <pre><code class="handlebars">\{{#em-list}}
+    \{{#em-list-item}}Hello\{{/em-list-item}}
+    \{{#em-list-item}}World\{{/em-list-item}}
+\{{/em-list}}</code></pre>
+</div>
+
+
+<h1>Styles</h1>
+
+<p>
+The list and its items can be customized by getting rendered with different DOM tag and styels.
+</p>
+
+{{#em-list tagName="div" class="list-group"}}
+    {{#em-list-item tagName="a" class="list-group-item" u="HELLO"}}Hello{{/em-list-item}}
+    {{#em-list-item tagName="a" class="list-group-item" u="WORLD"}}World{{/em-list-item}}
+{{/em-list}}
+
+
+<h1>Selection</h1>
+
+<p>
+A controller property can be bound as the selected item simply by binding the <i>selected</i> property of the <i>\{{em-list}}</i> tag.
+</p>
+
+{{#em-list tagName="div" class="list-group" selectedClass="active" selected=s}}
+    {{#em-list-item tagName="a" class="list-group-item" u="HELLO"}}Hello{{/em-list-item}}
+    {{#em-list-item tagName="a" class="list-group-item" u="WORLD"}}World{{/em-list-item}}
+{{/em-list}}
+
+{{#if s}}
+    <p>Selected item is: {{s.u}}<p>
+{{/if}}
+
+<h3>Markup</h3>
+
+<div class="well line-example">
+    <pre><code class="handlebars">\{{#em-list tagName="div" class="list-group" selectedClass="active" selected=s}}
+    \{{#em-list-item tagName="a" class="list-group-item" u="HELLO"}}Hello\{{/em-list-item}}
+    \{{#em-list-item tagName="a" class="list-group-item" u="WORLD"}}World\{{/em-list-item}}
+\{{/em-list}}
+
+Selected item is: \{{s.u}}</code></pre></div>

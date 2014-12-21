@@ -1,0 +1,82 @@
+<h1>Item Selection State</h1>
+
+<p>
+Items within the list can notify the controller when they are selected or deselected.
+
+For every <i>\{{em-list-item}}</i> tag you can optionally define two properties to recieve events:
+</p>
+
+<p>
+<table class="table">
+<tr><th>Property Name</th><th>Action Params</th><th>Details</th></tr>
+<tr><td>on-select</td><td>item - The selected item</td><td>The action in the controller to be invoked when the item was selected.</td></tr>
+<tr><td>on-deselect</td><td>item - The deselected item</td><td>The action in the controller to be invoked when the item selection was removed.</td></tr>
+</table>
+
+<h2>Demo</h2>
+
+<p>
+{{#em-list tagName="div" selectedClass="active" class="btn-group"}}
+    {{#em-list-item tagName="div" class="btn btn-default" name="Hello"}}Hello{{/em-list-item}}
+    {{#em-list-item tagName="div" class="btn btn-default" on-select="worldSelected" on-deselect="worldDeselected" name="World"}}World{{/em-list-item}}
+{{/em-list}}
+</p>
+
+<p>
+Message: {{message}}
+</p>
+
+<h2>Markup</h2>
+
+<div class="well line-example">
+    <pre><code class="handlebars">\{{#em-list tagName="div" selectedClass="active" class="btn-group"}}
+    \{{#em-list-item tagName="div" class="btn btn-default" name="Hello"}}Hello\{{/em-list-item}}
+    \{{#em-list-item tagName="div" class="btn btn-default" on-select="worldSelected" on-deselect="worldDeselected" name="World"}}World\{{/em-list-item}}
+\{{/em-list}}</code></pre>
+</div>
+
+<div class="well line-example">
+    <pre><code class="coffeescript">Ember.ObjectController.extend
+    message: 'Push the "World" button.'
+    actions:
+        worldSelected: (item) ->
+            @set 'message', "#{item.name} selected, now click Hello"
+
+        worldDeselected: (item) ->
+            @set 'message', "#{item.name} was de-selected, now click World"
+</code></pre>
+</div>
+
+
+<h1>Item Selection State</h1>
+<p>
+An item can change its state based on the selection of another item, this can happen when binding a controller property to the <i>on-selection-change</i> on the <i>\{{em-list-item}}</i> tag.
+</p>
+
+<h2>Demo</h2>
+<p>
+{{#em-list tagName="div" selectedClass="active" class="btn-group"}}
+    {{#em-list-item tagName="div" class="btn btn-default" on-selection-change="helloState" name="H"}}Hello{{/em-list-item}}
+    {{#em-list-item tagName="div" class="btn btn-default" name="W"}}World{{/em-list-item}}
+{{/em-list}}
+</p>
+
+
+<h2>Markup</h2>
+
+<div class="well line-example">
+    <pre><code class="handlebars">\{{#em-list tagName="div" selectedClass="active" class="btn-group"}}
+    \{{#em-list-item tagName="div" class="btn btn-default" on-selection-change="helloState" name="H"}}Hello\{{/em-list-item}}
+    \{{#em-list-item tagName="div" class="btn btn-default" name="W"}}World\{{/em-list-item}}
+\{{/em-list}}</code></pre>
+</div>
+
+<div class="well line-example">
+    <pre><code class="coffeescript">Ember.ObjectController.extend
+    message: 'Push the "World" button.'
+    actions:
+        helloState: (helloItem, otherItem) ->
+            if otherItem.name is 'W'
+                helloItem.set 'disabled', 'disabled'
+</code></pre>
+</div>

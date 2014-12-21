@@ -1,0 +1,68 @@
+<h1>List with models</h1>
+
+<p>
+Think of a scenario when there's a need of a toolbar of items (rendered as buttons) and a table of models beneath it with selection support,
+now items in the toolbar should change their state according to the model selection in the table.
+
+For example an 'Edit' button may be disabled unless there is exactly 1 selected model, or a 'Delete' button may be enabled only when there is one or more selected items.
+
+In the template, only 1 expression is needed, the content property is expected to be an array of array, where each array represents a section in the action bar and contains objects that represent a button defintion in the bar, the selectedItems property is expected to be an array of the currently selected items on a list.
+
+To achieve this you need to set up two properties:
+<ol>
+<li>Set <i>models</i> property on the <i>\{{em-list}}</i> tag and bind it to the models selection, this can be an array of models or a single model.</li>
+<li>Set <i>on-model-change</i> property on the <i>\{{em-list-item}}</i> tag and bind it to an action in the controller, the action will be invoked when the <i>models</i> (bound to the list) property changes.</li>
+</ol>
+
+<h2>Demo</h2>
+
+<p>
+This demo demonstrate the following logic:
+<ol>
+<li><i>Add</i> button is always enabled.</li>
+<li><i>Edit</i> button is enabled only if exactly 1 item is selected.</li>
+<li><i>Delete</i> button is enabled only if there is 1 or more items selected items.</li>
+</ol>
+</p>
+
+<p>
+{{#em-list tagName="div" selectedClass="active" class="btn-group" models=checked}}
+    {{#em-list-item tagName="div" class="btn btn-default" a="A"}}Add{{/em-list-item}}
+    {{#em-list-item tagName="div" class="btn btn-default" on-model-change="editModelChanged" a="E"}}Edit{{/em-list-item}}
+    {{#em-list-item tagName="div" class="btn btn-default" on-model-change="deleteModelChanged" a="D"}}Delete{{/em-list-item}}
+{{/em-list}}
+</p>
+<p>
+<table class="table" style="width: 30%">
+<tr><th width="10%">Select</th><th>Title</th></tr>
+    {{#each model}}
+        <tr>
+            <td>{{input type="checkbox" checked=this.checked}}</td><td>{{this.title}}</td>
+        </tr>
+    {{/each}}
+</table>
+</p>
+
+<h2>Markup</h2>
+
+<div class="well line-example">
+    <pre><code class="handlebars">\{{#em-list tagName="div" selectedClass="active" class="btn-group" models=checked}}
+    \{{#em-list-item tagName="div" class="btn btn-default" a="A"}}Add\{{/em-list-item}}
+    \{{#em-list-item tagName="div" class="btn btn-default" on-model-change="editModelChanged" a="E"}}Edit\{{/em-list-item}}
+    \{{#em-list-item tagName="div" class="btn btn-default" on-model-change="deleteModelChanged" a="D"}}Delete\{{/em-list-item}}
+\{{/em-list}}</code></pre>
+</div>
+
+<div class="well line-example">
+    <pre><code class="coffeescript">Ember.ArrayController.extend
+    actions:
+        editModelChanged: (editItem, models) ->
+            editItem.set 'disabled', if models.length is 1 then undefined else 'disabled'
+        deleteModelChanged: (deleteItem, models) ->
+            deleteItem.set 'disabled', if models.length > 0 then undefined else 'disabled'
+
+
+    checked: (->
+        return this.filterBy('checked', true)
+    ).property('@each.checked')</code></pre>
+</div>
