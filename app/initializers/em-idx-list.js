@@ -5,7 +5,7 @@ export default {
   name: 'ember-idx-list',
   initialize: function() {
     if (!Em.Config) {
-        Em.Config = Config = Config.create()
+        Em.Config = Config.create()
     }
   }
 };
