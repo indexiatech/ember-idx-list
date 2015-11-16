@@ -25,7 +25,7 @@ export default Em.Mixin.create({
    */
   index: (function() {
     return this.get('list.items').indexOf(this);
-  }).property('list.items.@each'),
+  }).property('list.items.[]'),
 
   /**
    * Register this item in the {{#crossLink "List"}}List{{/crossLink}} component instance.
