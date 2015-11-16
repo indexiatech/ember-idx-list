@@ -132,5 +132,5 @@ export default Em.Component.extend(WithConfigMixin, {
         return i.sendAction('on-model-change', i, _this.get('models'));
       };
     })(this));
-  }).observes('models', 'models.@each', 'models.length')
+  }).observes('models', 'models.[]', 'models.length')
 });
